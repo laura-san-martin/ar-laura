@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
   <script src="./scripts/aframe.min.js"></script>
-  <!-- we import arjs version without NFT but with marker + location based support -->
   <script src="./scripts/aframe-ar.js"></script>
+  <script src="./scripts/aframe-extras.min.js"></script>
+  <script src="./scripts/gesture-detector.js"></script>
+  <script src="./scripts/gesture-handler.js"></script>
   <body style="margin : 0px; overflow: hidden;">
-    <a-scene embedded arjs>
+    <a-scene renderer="logarithmicDepthBuffer: true;" embedded arjs vr-mode-ui="enabled: false" gesture-detector>
+      <a-assets>
+        <a-asset-item id="finalModel" src="./assets/Final_Export.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      </a-assets>
       <a-marker type="pattern" url="./assets/pattern-xr-hub-qr-code.patt">
-        <a-entity
-          position="0 0 0"
-          scale="0.1 0.1 0.1"
-          gltf-model="./assets/Laura Chibi.gltf"
-        ></a-entity>
+        <a-entity position="0 0 0" scale="0.15 0.15 0.15" animation-mixer gltf-model="#finalModel" gesture-handler ></a-entity>
+        <a-light type="hemisphere" intensity="1" ></a-light>
+        <a-light target="finalModel"  position="-5 5 1.5" penumbra=".2" type="directional" color="#03fcec" intensity="0.3" ground-color="#ffffff"></a-light>
+        <a-light target="finalModel"  position="5 5 1.5" penumbra=".2" type="directional" color="#ff0040" intensity="0.3" ground-color="#ffffff"></a-light>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
